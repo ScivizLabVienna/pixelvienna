@@ -57,7 +57,7 @@ body {
 }
 
 /* Header */
-header { border-bottom: 3px solid var(--red); padding: clamp(1rem, 3vw, 2.5rem) 0; margin-bottom: clamp(1.5rem, 4vw, 3rem); }
+header { border-bottom: 3px solid var(--red); padding: clamp(1rem, 3vw, 2.5rem) 0; margin-bottom: clamp(1.5rem, 4vw, 3rem); position: relative; }
 header h1 {
   font-family: var(--font-display); font-style: italic; font-weight: bold;
   font-size: clamp(2.5rem, 7vw, 5rem); line-height: 1; text-transform: uppercase;
@@ -315,7 +315,27 @@ footer {
   font-size: clamp(.65rem, 1vw, .8rem); text-transform: uppercase; text-align: center;
   color: var(--muted); margin-top: .5rem;
 }
-</style>
+
+/* Fullscreen button */
+.fullscreen-btn {
+  position: absolute;
+  top: clamp(.5rem, 2vw, 1.5rem);
+  right: clamp(.5rem, 2vw, 1.5rem);
+  background: rgba(255,255,255,.1);
+  border: 2px solid rgba(255,255,255,.2);
+  color: var(--ink);
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  width: clamp(40px, 6vw, 56px);
+  height: clamp(40px, 6vw, 56px);
+  border-radius: 8px;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .2s ease;
+}
+.fullscreen-btn:hover { background: rgba(255,255,255,.2); }
 </style>
 </head>
 <body>
@@ -324,6 +344,7 @@ footer {
     <h1>PXL 19 <span style="font-size:.5em;vertical-align:middle;">—</span> SPEAKER DASHBOARD</h1>
     <div class="sub">Local · Non-interactive · Friday 13.11</div>
     <div class="day-pill">Friday 13.11 · All talks</div>
+    <button id="fullscreen-btn" class="fullscreen-btn" onclick="toggleFullscreen()" title="Toggle fullscreen">⛶</button>
   </header>
 
   <div class="dashboard">
@@ -639,6 +660,17 @@ scheduleSection.addEventListener("click", () => {
     }, 5000);
   }
 });
+
+function toggleFullscreen() {
+  const doc = document.documentElement;
+  if (!document.fullscreenElement && !document.webkitFullscreenElement) {
+    if (doc.requestFullscreen) doc.requestFullscreen();
+    else if (doc.webkitRequestFullscreen) doc.webkitRequestFullscreen();
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+  }
+}
 </script>
 </body>
 </html>
